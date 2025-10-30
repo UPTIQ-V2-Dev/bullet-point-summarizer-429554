@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Slack, Copy, ExternalLink } from 'lucide-react';
 import { useState } from 'react';
+import { emitter } from '@/agentSdk';
 
 interface SlackPreviewProps {
     summary: string[];
@@ -12,6 +13,7 @@ interface SlackPreviewProps {
 
 export const SlackPreview = ({ summary, onConnectSlack, isConnected = false }: SlackPreviewProps) => {
     const [copied, setCopied] = useState(false);
+    const [sending, setSending] = useState(false);
 
     const slackFormattedMessage = summary.join('\n');
 
@@ -22,6 +24,27 @@ export const SlackPreview = ({ summary, onConnectSlack, isConnected = false }: S
             setTimeout(() => setCopied(false), 2000);
         } catch (error) {
             console.error('Failed to copy message:', error);
+        }
+    };
+
+    const handleSendToSlack = async () => {
+        setSending(true);
+        try {
+            await emitter.emit({
+                agentId: '90d76718-973e-4519-bfde-f182d01d45a0',
+                event: 'sendSummaryToSlack',
+                payload: {
+                    summary: slackFormattedMessage,
+                    recipient: 'Sagar Jadhav',
+                    bulletPoints: summary
+                }
+            });
+            // Call the original onConnectSlack for any additional UI updates
+            onConnectSlack();
+        } catch (error) {
+            console.error('Failed to send to Slack:', error);
+        } finally {
+            setSending(false);
         }
     };
 
@@ -62,12 +85,12 @@ export const SlackPreview = ({ summary, onConnectSlack, isConnected = false }: S
 
                 <div className='flex flex-col sm:flex-row gap-2'>
                     <Button
-                        onClick={onConnectSlack}
+                        onClick={handleSendToSlack}
                         className='flex items-center gap-2 bg-blue-600 hover:bg-blue-700'
-                        disabled={!isConnected}
+                        disabled={sending}
                     >
                         <ExternalLink className='h-4 w-4' />
-                        Connect & Send to Slack
+                        {sending ? 'Sending...' : 'Connect & Send to Slack'}
                     </Button>
                     <Button
                         variant='outline'
@@ -79,12 +102,9 @@ export const SlackPreview = ({ summary, onConnectSlack, isConnected = false }: S
                     </Button>
                 </div>
 
-                {!isConnected && (
-                    <p className='text-xs text-muted-foreground'>
-                        * You are a highly intelligent AI assistant trained to summarize documents and conversations
-                        accurately and concisely.
-                    </p>
-                )}
+                <p className='text-xs text-muted-foreground'>
+                    * Click "Connect & Send to Slack" to send this summary directly to Sagar Jadhav via Slack.
+                </p>
             </CardContent>
         </Card>
     );

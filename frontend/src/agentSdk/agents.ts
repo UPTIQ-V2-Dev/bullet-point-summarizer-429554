@@ -38,6 +38,11 @@ export const AGENT_CONFIGS: AgentConfig[] = [
                 outputSchema: z.object({
                     summary: z.string().describe('The generated summary of the provided text')
                 })
+            },
+            {
+                type: 'async',
+                name: 'sendSummaryToSlack',
+                description: 'Send the generated summary to Slack channel, specifically to Sagar Jadhav'
             }
         ],
         config: {

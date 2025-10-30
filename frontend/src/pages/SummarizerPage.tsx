@@ -129,7 +129,7 @@ export const SummarizerPage = () => {
                         <SlackPreview
                             summary={summaryMutation.data.bulletPoints}
                             onConnectSlack={handleConnectSlack}
-                            isConnected={false}
+                            isConnected={true}
                         />
                     </div>
                 </div>

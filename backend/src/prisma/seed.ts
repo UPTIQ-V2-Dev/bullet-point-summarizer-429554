@@ -21,6 +21,31 @@ async function main() {
     });
 
     console.log('✅ Created admin user:', admin.email);
+
+    // Create sample summary
+    const sampleSummary = await prisma.summary.upsert({
+        where: { id: 'sample-summary-1' },
+        update: {},
+        create: {
+            id: 'sample-summary-1',
+            originalText:
+                'Q3 Marketing Strategy focuses on digital channels. Key initiatives include social media campaigns, influencer partnerships, and content marketing. We expect a 15% increase in lead generation through these digital efforts. The budget allocation prioritizes social media advertising and content creation tools.',
+            summaryText:
+                'Q3 Marketing Strategy focuses on digital channels. Key initiatives include social media campaigns, influencer partnerships, and content marketing. We expect a 15% increase in lead generation through these digital efforts. Executed outcome by AI Slack Summarizer.',
+            bulletPoints: [
+                '• Q3 Marketing Strategy focuses on digital channels.',
+                '• Key initiatives include social media campaigns, influencer partnerships, and content marketing.',
+                '• We expect a 15% increase in lead generation through these digital efforts.',
+                '• The budget allocation prioritizes social media advertising and content creation tools.'
+            ],
+            wordCount: 45,
+            readingTime: 1,
+            title: 'Q3 Marketing Strategy',
+            userId: admin.id
+        }
+    });
+
+    console.log('✅ Created sample summary:', sampleSummary.id);
 }
 
 main()

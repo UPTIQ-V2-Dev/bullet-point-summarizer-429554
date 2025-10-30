@@ -56,9 +56,9 @@ export default router;
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               name: John Doe
+ *               email: john@example.com
+ *               password: password123
  *     responses:
  *       "201":
  *         description: Created
@@ -98,8 +98,8 @@ export default router;
  *                 type: string
  *                 format: password
  *             example:
- *               email: fake@example.com
- *               password: password1
+ *               email: john@example.com
+ *               password: password123
  *     responses:
  *       "200":
  *         description: OK
@@ -199,7 +199,7 @@ export default router;
  *                 type: string
  *                 format: email
  *             example:
- *               email: fake@example.com
+ *               email: john@example.com
  *     responses:
  *       "204":
  *         description: No content
@@ -235,7 +235,7 @@ export default router;
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               password: password1
+ *               password: newpassword123
  *     responses:
  *       "204":
  *         description: No content

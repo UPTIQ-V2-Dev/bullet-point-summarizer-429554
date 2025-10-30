@@ -8,7 +8,6 @@ const userSchema = z.object({
     id: z.number(),
     email: z.string(),
     name: z.string().nullable(),
-    password: z.string(),
     role: z.string(),
     isEmailVerified: z.boolean(),
     createdAt: z.string(),
@@ -44,13 +43,17 @@ const getUsersTool: MCPTool = {
         page: z.number().int().optional()
     }),
     outputSchema: z.object({
-        users: z.array(userSchema)
+        results: z.array(userSchema),
+        page: z.number(),
+        limit: z.number(),
+        totalPages: z.number(),
+        totalResults: z.number()
     }),
     fn: async (inputs: { name?: string; role?: string; sortBy?: string; limit?: number; page?: number }) => {
         const filter = pick(inputs, ['name', 'role']);
         const options = pick(inputs, ['sortBy', 'limit', 'page']);
         const result = await userService.queryUsers(filter, options);
-        return { users: result };
+        return result;
     }
 };
 

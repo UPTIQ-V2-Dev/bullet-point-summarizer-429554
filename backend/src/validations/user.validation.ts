@@ -23,13 +23,25 @@ const getUsers = {
 
 const getUser = {
     params: Joi.object().keys({
-        userId: Joi.number().integer()
+        userId: Joi.string().custom((value, helpers) => {
+            const parsed = parseInt(value);
+            if (isNaN(parsed)) {
+                return helpers.error('any.invalid');
+            }
+            return parsed;
+        })
     })
 };
 
 const updateUser = {
     params: Joi.object().keys({
-        userId: Joi.number().integer()
+        userId: Joi.string().custom((value, helpers) => {
+            const parsed = parseInt(value);
+            if (isNaN(parsed)) {
+                return helpers.error('any.invalid');
+            }
+            return parsed;
+        })
     }),
     body: Joi.object()
         .keys({
@@ -42,7 +54,13 @@ const updateUser = {
 
 const deleteUser = {
     params: Joi.object().keys({
-        userId: Joi.number().integer()
+        userId: Joi.string().custom((value, helpers) => {
+            const parsed = parseInt(value);
+            if (isNaN(parsed)) {
+                return helpers.error('any.invalid');
+            }
+            return parsed;
+        })
     })
 };
 

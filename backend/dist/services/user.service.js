@@ -79,10 +79,10 @@ const getUserById = async (id, keys = ['id', 'email', 'name', 'password', 'role'
  * @returns {Promise<Pick<User, Key> | null>}
  */
 const getUserByEmail = async (email, keys = ['id', 'email', 'name', 'password', 'role', 'isEmailVerified', 'createdAt', 'updatedAt']) => {
-    return await prisma.user.findUnique({
+    return (await prisma.user.findUnique({
         where: { email },
         select: keys.reduce((obj, k) => ({ ...obj, [k]: true }), {})
-    });
+    }));
 };
 /**
  * Update user by id

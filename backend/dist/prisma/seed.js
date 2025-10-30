@@ -1,4 +1,4 @@
-import { PrismaClient, Role } from '../generated/prisma/index.js';
+import { PrismaClient } from '../generated/prisma/index.js';
 import bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 async function main() {
@@ -12,7 +12,7 @@ async function main() {
             email: 'admin@example.com',
             name: 'Admin',
             password: adminPassword,
-            role: Role.ADMIN,
+            role: 'ADMIN',
             isEmailVerified: true
         }
     });

@@ -1,14 +1,20 @@
 import prisma from "../client.js";
-import { TokenType } from '../generated/prisma/index.js';
 import config from "./config.js";
 import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
+// Token type constants
+const TOKEN_TYPES = {
+    ACCESS: 'ACCESS',
+    REFRESH: 'REFRESH',
+    RESET_PASSWORD: 'RESET_PASSWORD',
+    VERIFY_EMAIL: 'VERIFY_EMAIL'
+};
 const jwtOptions = {
     secretOrKey: config.jwt.secret,
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
 };
 const jwtVerify = async (payload, done) => {
     try {
-        if (payload.type !== TokenType.ACCESS) {
+        if (payload.type !== TOKEN_TYPES.ACCESS) {
             throw new Error('Invalid token type');
         }
         const user = await prisma.user.findUnique({

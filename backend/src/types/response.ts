@@ -1,6 +1,6 @@
 export interface TokenResponse {
     token: string;
-    expires: Date;
+    expires: string;
 }
 
 export interface AuthTokensResponse {

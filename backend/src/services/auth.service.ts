@@ -1,5 +1,5 @@
 import prisma from '../client.ts';
-import { TokenType, User } from '../generated/prisma/index.js';
+import { User } from '../generated/prisma/index.js';
 import { AuthTokensResponse } from '../types/response.ts';
 import ApiError from '../utils/ApiError.ts';
 import { encryptPassword, isPasswordMatch } from '../utils/encryption.ts';
@@ -7,6 +7,14 @@ import exclude from '../utils/exclude.ts';
 import tokenService from './token.service.ts';
 import userService from './user.service.ts';
 import httpStatus from 'http-status';
+
+// Token type constants
+const TOKEN_TYPES = {
+    ACCESS: 'ACCESS',
+    REFRESH: 'REFRESH',
+    RESET_PASSWORD: 'RESET_PASSWORD',
+    VERIFY_EMAIL: 'VERIFY_EMAIL'
+} as const;
 
 /**
  * Login with username and password
@@ -40,7 +48,7 @@ const logout = async (refreshToken: string): Promise<void> => {
     const refreshTokenData = await prisma.token.findFirst({
         where: {
             token: refreshToken,
-            type: TokenType.REFRESH,
+            type: TOKEN_TYPES.REFRESH,
             blacklisted: false
         }
     });
@@ -57,7 +65,7 @@ const logout = async (refreshToken: string): Promise<void> => {
  */
 const refreshAuth = async (refreshToken: string): Promise<AuthTokensResponse> => {
     try {
-        const refreshTokenData = await tokenService.verifyToken(refreshToken, TokenType.REFRESH);
+        const refreshTokenData = await tokenService.verifyToken(refreshToken, TOKEN_TYPES.REFRESH);
         const { userId } = refreshTokenData;
         await prisma.token.delete({ where: { id: refreshTokenData.id } });
         return tokenService.generateAuthTokens({ id: userId });
@@ -74,14 +82,14 @@ const refreshAuth = async (refreshToken: string): Promise<AuthTokensResponse> =>
  */
 const resetPassword = async (resetPasswordToken: string, newPassword: string): Promise<void> => {
     try {
-        const resetPasswordTokenData = await tokenService.verifyToken(resetPasswordToken, TokenType.RESET_PASSWORD);
+        const resetPasswordTokenData = await tokenService.verifyToken(resetPasswordToken, TOKEN_TYPES.RESET_PASSWORD);
         const user = await userService.getUserById(resetPasswordTokenData.userId);
         if (!user) {
             throw new Error();
         }
         const encryptedPassword = await encryptPassword(newPassword);
         await userService.updateUserById(user.id, { password: encryptedPassword });
-        await prisma.token.deleteMany({ where: { userId: user.id, type: TokenType.RESET_PASSWORD } });
+        await prisma.token.deleteMany({ where: { userId: user.id, type: TOKEN_TYPES.RESET_PASSWORD } });
     } catch (error) {
         throw new ApiError(httpStatus.UNAUTHORIZED, 'Invalid or expired token');
     }
@@ -94,9 +102,9 @@ const resetPassword = async (resetPasswordToken: string, newPassword: string): P
  */
 const verifyEmail = async (verifyEmailToken: string): Promise<void> => {
     try {
-        const verifyEmailTokenData = await tokenService.verifyToken(verifyEmailToken, TokenType.VERIFY_EMAIL);
+        const verifyEmailTokenData = await tokenService.verifyToken(verifyEmailToken, TOKEN_TYPES.VERIFY_EMAIL);
         await prisma.token.deleteMany({
-            where: { userId: verifyEmailTokenData.userId, type: TokenType.VERIFY_EMAIL }
+            where: { userId: verifyEmailTokenData.userId, type: TOKEN_TYPES.VERIFY_EMAIL }
         });
         await userService.updateUserById(verifyEmailTokenData.userId, { isEmailVerified: true });
     } catch (error) {

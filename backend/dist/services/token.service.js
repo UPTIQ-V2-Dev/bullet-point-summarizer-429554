@@ -1,11 +1,17 @@
 import prisma from "../client.js";
 import config from "../config/config.js";
-import { TokenType } from '../generated/prisma/index.js';
 import ApiError from "../utils/ApiError.js";
 import userService from "./user.service.js";
 import httpStatus from 'http-status';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
+// Token type constants
+const TOKEN_TYPES = {
+    ACCESS: 'ACCESS',
+    REFRESH: 'REFRESH',
+    RESET_PASSWORD: 'RESET_PASSWORD',
+    VERIFY_EMAIL: 'VERIFY_EMAIL'
+};
 /**
  * Generate token
  * @param {number} userId
@@ -68,18 +74,18 @@ const verifyToken = async (token, type) => {
  */
 const generateAuthTokens = async (user) => {
     const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
-    const accessToken = generateToken(user.id, accessTokenExpires, TokenType.ACCESS);
+    const accessToken = generateToken(user.id, accessTokenExpires, TOKEN_TYPES.ACCESS);
     const refreshTokenExpires = moment().add(config.jwt.refreshExpirationDays, 'days');
-    const refreshToken = generateToken(user.id, refreshTokenExpires, TokenType.REFRESH);
-    await saveToken(refreshToken, user.id, refreshTokenExpires, TokenType.REFRESH);
+    const refreshToken = generateToken(user.id, refreshTokenExpires, TOKEN_TYPES.REFRESH);
+    await saveToken(refreshToken, user.id, refreshTokenExpires, TOKEN_TYPES.REFRESH);
     return {
         access: {
             token: accessToken,
-            expires: accessTokenExpires.toDate()
+            expires: accessTokenExpires.toISOString()
         },
         refresh: {
             token: refreshToken,
-            expires: refreshTokenExpires.toDate()
+            expires: refreshTokenExpires.toISOString()
         }
     };
 };
@@ -94,8 +100,8 @@ const generateResetPasswordToken = async (email) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
     }
     const expires = moment().add(config.jwt.resetPasswordExpirationMinutes, 'minutes');
-    const resetPasswordToken = generateToken(user.id, expires, TokenType.RESET_PASSWORD);
-    await saveToken(resetPasswordToken, user.id, expires, TokenType.RESET_PASSWORD);
+    const resetPasswordToken = generateToken(user.id, expires, TOKEN_TYPES.RESET_PASSWORD);
+    await saveToken(resetPasswordToken, user.id, expires, TOKEN_TYPES.RESET_PASSWORD);
     return resetPasswordToken;
 };
 /**
@@ -105,8 +111,8 @@ const generateResetPasswordToken = async (email) => {
  */
 const generateVerifyEmailToken = async (user) => {
     const expires = moment().add(config.jwt.verifyEmailExpirationMinutes, 'minutes');
-    const verifyEmailToken = generateToken(user.id, expires, TokenType.VERIFY_EMAIL);
-    await saveToken(verifyEmailToken, user.id, expires, TokenType.VERIFY_EMAIL);
+    const verifyEmailToken = generateToken(user.id, expires, TOKEN_TYPES.VERIFY_EMAIL);
+    await saveToken(verifyEmailToken, user.id, expires, TOKEN_TYPES.VERIFY_EMAIL);
     return verifyEmailToken;
 };
 export default {

@@ -2,6 +2,16 @@ import prisma from "../client.js";
 import ApiError from "../utils/ApiError.js";
 import httpStatus from 'http-status';
 /**
+ * Helper function to convert database summary to API format
+ */
+const formatSummaryForAPI = (summary) => {
+    const bulletPoints = typeof summary.bulletPoints === 'string' ? JSON.parse(summary.bulletPoints) : summary.bulletPoints;
+    return {
+        ...summary,
+        bulletPoints
+    };
+};
+/**
  * Generate AI summary and bullet points from text
  * @param {string} originalText - The original text to summarize
  * @param {number} userId - The user ID creating the summary
@@ -27,7 +37,7 @@ const createSummary = async (originalText, userId, options = {}) => {
         data: {
             originalText,
             summaryText,
-            bulletPoints,
+            bulletPoints: JSON.stringify(bulletPoints),
             wordCount,
             readingTime,
             userId
@@ -72,7 +82,7 @@ const getSummariesByUser = async (userId, options = {}) => {
     ]);
     const totalPages = Math.ceil(totalResults / limit);
     return {
-        results: summaries,
+        results: summaries.map(formatSummaryForAPI),
         page,
         limit,
         totalPages,
@@ -96,7 +106,7 @@ const getSummaryById = async (id, userId) => {
     if (summary.userId !== userId) {
         throw new ApiError(httpStatus.FORBIDDEN, 'Access denied');
     }
-    return summary;
+    return formatSummaryForAPI(summary);
 };
 /**
  * Delete summary by ID
@@ -110,7 +120,7 @@ const deleteSummaryById = async (id, userId) => {
         throw new ApiError(httpStatus.NOT_FOUND, 'Summary not found');
     }
     await prisma.summary.delete({ where: { id } });
-    return summary;
+    return formatSummaryForAPI(summary);
 };
 /**
  * AI text summarization function (simulated)

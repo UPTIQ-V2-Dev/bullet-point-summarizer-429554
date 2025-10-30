@@ -86,9 +86,6 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -139,11 +136,6 @@ exports.Prisma.SlackMessageScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
-};
-
-exports.Prisma.QueryMode = {
-  default: 'default',
-  insensitive: 'insensitive'
 };
 
 exports.Prisma.NullsOrder = {
@@ -206,8 +198,7 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "postgresql",
-  "postinstall": false,
+  "activeProvider": "sqlite",
   "inlineDatasources": {
     "db": {
       "url": {
@@ -216,8 +207,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              Int       @id @default(autoincrement())\n  email           String    @unique\n  name            String?\n  password        String\n  role            Role      @default(USER)\n  isEmailVerified Boolean   @default(false)\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  tokens          Token[]\n  summaries       Summary[]\n}\n\nmodel Token {\n  id          Int       @id @default(autoincrement())\n  token       String\n  type        TokenType\n  expires     DateTime\n  blacklisted Boolean   @default(false)\n  createdAt   DateTime  @default(now())\n  user        User      @relation(fields: [userId], references: [id])\n  userId      Int\n}\n\nmodel Summary {\n  id            String         @id @default(uuid())\n  originalText  String\n  summaryText   String\n  bulletPoints  String[]\n  wordCount     Int\n  readingTime   Int\n  title         String?\n  userId        Int\n  createdAt     DateTime       @default(now())\n  updatedAt     DateTime       @updatedAt\n  user          User           @relation(fields: [userId], references: [id])\n  slackMessages SlackMessage[]\n}\n\nmodel SlackMessage {\n  id          String   @id @default(uuid())\n  content     String\n  channelId   String\n  channelName String\n  sentAt      DateTime\n  summaryId   String\n  createdAt   DateTime @default(now())\n  summary     Summary  @relation(fields: [summaryId], references: [id])\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\nenum TokenType {\n  ACCESS\n  REFRESH\n  RESET_PASSWORD\n  VERIFY_EMAIL\n}\n",
-  "inlineSchemaHash": "f406b8416b615ef42284635e25ab9460d67a06fed4508869e8dbd129a8d160e7",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              Int       @id @default(autoincrement())\n  email           String    @unique\n  name            String?\n  password        String\n  role            Role      @default(USER)\n  isEmailVerified Boolean   @default(false)\n  createdAt       DateTime  @default(now())\n  updatedAt       DateTime  @updatedAt\n  tokens          Token[]\n  summaries       Summary[]\n}\n\nmodel Token {\n  id          Int       @id @default(autoincrement())\n  token       String\n  type        TokenType\n  expires     DateTime\n  blacklisted Boolean   @default(false)\n  createdAt   DateTime  @default(now())\n  user        User      @relation(fields: [userId], references: [id])\n  userId      Int\n}\n\nmodel Summary {\n  id            String         @id @default(uuid())\n  originalText  String\n  summaryText   String\n  bulletPoints  String\n  wordCount     Int\n  readingTime   Int\n  title         String?\n  userId        Int\n  createdAt     DateTime       @default(now())\n  updatedAt     DateTime       @updatedAt\n  user          User           @relation(fields: [userId], references: [id])\n  slackMessages SlackMessage[]\n}\n\nmodel SlackMessage {\n  id          String   @id @default(uuid())\n  content     String\n  channelId   String\n  channelName String\n  sentAt      DateTime\n  summaryId   String\n  createdAt   DateTime @default(now())\n  summary     Summary  @relation(fields: [summaryId], references: [id])\n}\n\nenum Role {\n  USER\n  ADMIN\n}\n\nenum TokenType {\n  ACCESS\n  REFRESH\n  RESET_PASSWORD\n  VERIFY_EMAIL\n}\n",
+  "inlineSchemaHash": "488d937d579c9c927cd1926d3c7acc504d01de9c2450552fe1180835e39fec08",
   "copyEngine": true
 }
 config.dirname = '/'

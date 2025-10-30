@@ -4,6 +4,19 @@ import ApiError from '../utils/ApiError.ts';
 import httpStatus from 'http-status';
 
 /**
+ * Helper function to convert database summary to API format
+ */
+const formatSummaryForAPI = (summary: Summary): Summary & { bulletPoints: string[] } => {
+    const bulletPoints =
+        typeof summary.bulletPoints === 'string' ? JSON.parse(summary.bulletPoints) : summary.bulletPoints;
+
+    return {
+        ...summary,
+        bulletPoints
+    };
+};
+
+/**
  * Generate AI summary and bullet points from text
  * @param {string} originalText - The original text to summarize
  * @param {number} userId - The user ID creating the summary
@@ -45,7 +58,7 @@ const createSummary = async (
         data: {
             originalText,
             summaryText,
-            bulletPoints,
+            bulletPoints: JSON.stringify(bulletPoints),
             wordCount,
             readingTime,
             userId
@@ -109,7 +122,7 @@ const getSummariesByUser = async (
     const totalPages = Math.ceil(totalResults / limit);
 
     return {
-        results: summaries,
+        results: summaries.map(formatSummaryForAPI),
         page,
         limit,
         totalPages,
@@ -137,7 +150,7 @@ const getSummaryById = async (id: string, userId: number): Promise<Summary | nul
         throw new ApiError(httpStatus.FORBIDDEN, 'Access denied');
     }
 
-    return summary;
+    return formatSummaryForAPI(summary);
 };
 
 /**
@@ -153,7 +166,7 @@ const deleteSummaryById = async (id: string, userId: number): Promise<Summary> =
     }
 
     await prisma.summary.delete({ where: { id } });
-    return summary;
+    return formatSummaryForAPI(summary);
 };
 
 /**

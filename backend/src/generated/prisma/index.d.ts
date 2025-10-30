@@ -2180,7 +2180,6 @@ export namespace Prisma {
      * The data used to create many Users.
      */
     data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -2199,7 +2198,6 @@ export namespace Prisma {
      * The data used to create many Users.
      */
     data: UserCreateManyInput | UserCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -3342,7 +3340,6 @@ export namespace Prisma {
      * The data used to create many Tokens.
      */
     data: TokenCreateManyInput | TokenCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -3361,7 +3358,6 @@ export namespace Prisma {
      * The data used to create many Tokens.
      */
     data: TokenCreateManyInput | TokenCreateManyInput[]
-    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -3555,6 +3551,7 @@ export namespace Prisma {
     id: string | null
     originalText: string | null
     summaryText: string | null
+    bulletPoints: string | null
     wordCount: number | null
     readingTime: number | null
     title: string | null
@@ -3567,6 +3564,7 @@ export namespace Prisma {
     id: string | null
     originalText: string | null
     summaryText: string | null
+    bulletPoints: string | null
     wordCount: number | null
     readingTime: number | null
     title: string | null
@@ -3606,6 +3604,7 @@ export namespace Prisma {
     id?: true
     originalText?: true
     summaryText?: true
+    bulletPoints?: true
     wordCount?: true
     readingTime?: true
     title?: true
@@ -3618,6 +3617,7 @@ export namespace Prisma {
     id?: true
     originalText?: true
     summaryText?: true
+    bulletPoints?: true
     wordCount?: true
     readingTime?: true
     title?: true
@@ -3730,7 +3730,7 @@ export namespace Prisma {
     id: string
     originalText: string
     summaryText: string
-    bulletPoints: string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title: string | null
@@ -3838,7 +3838,7 @@ export namespace Prisma {
       id: string
       originalText: string
       summaryText: string
-      bulletPoints: string[]
+      bulletPoints: string
       wordCount: number
       readingTime: number
       title: string | null
@@ -4273,7 +4273,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Summary", 'String'>
     readonly originalText: FieldRef<"Summary", 'String'>
     readonly summaryText: FieldRef<"Summary", 'String'>
-    readonly bulletPoints: FieldRef<"Summary", 'String[]'>
+    readonly bulletPoints: FieldRef<"Summary", 'String'>
     readonly wordCount: FieldRef<"Summary", 'Int'>
     readonly readingTime: FieldRef<"Summary", 'Int'>
     readonly title: FieldRef<"Summary", 'String'>
@@ -4509,7 +4509,6 @@ export namespace Prisma {
      * The data used to create many Summaries.
      */
     data: SummaryCreateManyInput | SummaryCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -4528,7 +4527,6 @@ export namespace Prisma {
      * The data used to create many Summaries.
      */
     data: SummaryCreateManyInput | SummaryCreateManyInput[]
-    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -5617,7 +5615,6 @@ export namespace Prisma {
      * The data used to create many SlackMessages.
      */
     data: SlackMessageCreateManyInput | SlackMessageCreateManyInput[]
-    skipDuplicates?: boolean
   }
 
   /**
@@ -5636,7 +5633,6 @@ export namespace Prisma {
      * The data used to create many SlackMessages.
      */
     data: SlackMessageCreateManyInput | SlackMessageCreateManyInput[]
-    skipDuplicates?: boolean
     /**
      * Choose, which related nodes to fetch as well
      */
@@ -5807,9 +5803,6 @@ export namespace Prisma {
    */
 
   export const TransactionIsolationLevel: {
-    ReadUncommitted: 'ReadUncommitted',
-    ReadCommitted: 'ReadCommitted',
-    RepeatableRead: 'RepeatableRead',
     Serializable: 'Serializable'
   };
 
@@ -5880,14 +5873,6 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-  export const QueryMode: {
-    default: 'default',
-    insensitive: 'insensitive'
-  };
-
-  export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
-
-
   export const NullsOrder: {
     first: 'first',
     last: 'last'
@@ -5909,13 +5894,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Int[]'
-   */
-  export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -5923,23 +5901,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'String[]'
-   */
-  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Role'
    */
   export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
-    
-
-
-  /**
-   * Reference to a field of type 'Role[]'
-   */
-  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
     
 
 
@@ -5958,13 +5922,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'DateTime[]'
-   */
-  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
    * Reference to a field of type 'TokenType'
    */
   export type EnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType'>
@@ -5972,23 +5929,9 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'TokenType[]'
-   */
-  export type ListEnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenType[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
-
-
-  /**
-   * Reference to a field of type 'Float[]'
-   */
-  export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
   /**
    * Deep Input Types
@@ -6144,7 +6087,7 @@ export namespace Prisma {
     id?: StringFilter<"Summary"> | string
     originalText?: StringFilter<"Summary"> | string
     summaryText?: StringFilter<"Summary"> | string
-    bulletPoints?: StringNullableListFilter<"Summary">
+    bulletPoints?: StringFilter<"Summary"> | string
     wordCount?: IntFilter<"Summary"> | number
     readingTime?: IntFilter<"Summary"> | number
     title?: StringNullableFilter<"Summary"> | string | null
@@ -6177,7 +6120,7 @@ export namespace Prisma {
     NOT?: SummaryWhereInput | SummaryWhereInput[]
     originalText?: StringFilter<"Summary"> | string
     summaryText?: StringFilter<"Summary"> | string
-    bulletPoints?: StringNullableListFilter<"Summary">
+    bulletPoints?: StringFilter<"Summary"> | string
     wordCount?: IntFilter<"Summary"> | number
     readingTime?: IntFilter<"Summary"> | number
     title?: StringNullableFilter<"Summary"> | string | null
@@ -6213,7 +6156,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Summary"> | string
     originalText?: StringWithAggregatesFilter<"Summary"> | string
     summaryText?: StringWithAggregatesFilter<"Summary"> | string
-    bulletPoints?: StringNullableListFilter<"Summary">
+    bulletPoints?: StringWithAggregatesFilter<"Summary"> | string
     wordCount?: IntWithAggregatesFilter<"Summary"> | number
     readingTime?: IntWithAggregatesFilter<"Summary"> | number
     title?: StringNullableWithAggregatesFilter<"Summary"> | string | null
@@ -6439,7 +6382,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -6453,7 +6396,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -6467,7 +6410,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6481,7 +6424,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6495,7 +6438,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -6508,7 +6451,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6520,7 +6463,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -6600,8 +6543,8 @@ export namespace Prisma {
 
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -6611,8 +6554,8 @@ export namespace Prisma {
 
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -6620,14 +6563,13 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -6635,14 +6577,13 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type EnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
@@ -6653,8 +6594,8 @@ export namespace Prisma {
 
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -6730,8 +6671,8 @@ export namespace Prisma {
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -6746,8 +6687,8 @@ export namespace Prisma {
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -6755,7 +6696,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -6764,8 +6704,8 @@ export namespace Prisma {
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -6773,7 +6713,6 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
@@ -6782,8 +6721,8 @@ export namespace Prisma {
 
   export type EnumRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
     not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
@@ -6800,8 +6739,8 @@ export namespace Prisma {
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -6814,8 +6753,8 @@ export namespace Prisma {
 
   export type EnumTokenTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[]
+    notIn?: $Enums.TokenType[]
     not?: NestedEnumTokenTypeFilter<$PrismaModel> | $Enums.TokenType
   }
 
@@ -6866,20 +6805,12 @@ export namespace Prisma {
 
   export type EnumTokenTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[]
+    notIn?: $Enums.TokenType[]
     not?: NestedEnumTokenTypeWithAggregatesFilter<$PrismaModel> | $Enums.TokenType
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTokenTypeFilter<$PrismaModel>
     _max?: NestedEnumTokenTypeFilter<$PrismaModel>
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type SlackMessageListRelationFilter = {
@@ -6915,6 +6846,7 @@ export namespace Prisma {
     id?: SortOrder
     originalText?: SortOrder
     summaryText?: SortOrder
+    bulletPoints?: SortOrder
     wordCount?: SortOrder
     readingTime?: SortOrder
     title?: SortOrder
@@ -6927,6 +6859,7 @@ export namespace Prisma {
     id?: SortOrder
     originalText?: SortOrder
     summaryText?: SortOrder
+    bulletPoints?: SortOrder
     wordCount?: SortOrder
     readingTime?: SortOrder
     title?: SortOrder
@@ -7106,10 +7039,6 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTokensInput, UserUpdateWithoutTokensInput>, UserUncheckedUpdateWithoutTokensInput>
   }
 
-  export type SummaryCreatebulletPointsInput = {
-    set: string[]
-  }
-
   export type UserCreateNestedOneWithoutSummariesInput = {
     create?: XOR<UserCreateWithoutSummariesInput, UserUncheckedCreateWithoutSummariesInput>
     connectOrCreate?: UserCreateOrConnectWithoutSummariesInput
@@ -7128,11 +7057,6 @@ export namespace Prisma {
     connectOrCreate?: SlackMessageCreateOrConnectWithoutSummaryInput | SlackMessageCreateOrConnectWithoutSummaryInput[]
     createMany?: SlackMessageCreateManySummaryInputEnvelope
     connect?: SlackMessageWhereUniqueInput | SlackMessageWhereUniqueInput[]
-  }
-
-  export type SummaryUpdatebulletPointsInput = {
-    set?: string[]
-    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutSummariesNestedInput = {
@@ -7187,8 +7111,8 @@ export namespace Prisma {
 
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -7198,8 +7122,8 @@ export namespace Prisma {
 
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7212,8 +7136,8 @@ export namespace Prisma {
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7226,8 +7150,8 @@ export namespace Prisma {
 
   export type NestedEnumRoleFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
     not?: NestedEnumRoleFilter<$PrismaModel> | $Enums.Role
   }
 
@@ -7238,8 +7162,8 @@ export namespace Prisma {
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7249,8 +7173,8 @@ export namespace Prisma {
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -7265,8 +7189,8 @@ export namespace Prisma {
 
   export type NestedFloatFilter<$PrismaModel = never> = {
     equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
     lt?: number | FloatFieldRefInput<$PrismaModel>
     lte?: number | FloatFieldRefInput<$PrismaModel>
     gt?: number | FloatFieldRefInput<$PrismaModel>
@@ -7276,8 +7200,8 @@ export namespace Prisma {
 
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7293,8 +7217,8 @@ export namespace Prisma {
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    in?: string[] | null
+    notIn?: string[] | null
     lt?: string | StringFieldRefInput<$PrismaModel>
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
@@ -7310,8 +7234,8 @@ export namespace Prisma {
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
     lt?: number | IntFieldRefInput<$PrismaModel>
     lte?: number | IntFieldRefInput<$PrismaModel>
     gt?: number | IntFieldRefInput<$PrismaModel>
@@ -7321,8 +7245,8 @@ export namespace Prisma {
 
   export type NestedEnumRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.Role[]
+    notIn?: $Enums.Role[]
     not?: NestedEnumRoleWithAggregatesFilter<$PrismaModel> | $Enums.Role
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleFilter<$PrismaModel>
@@ -7339,8 +7263,8 @@ export namespace Prisma {
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[]
+    notIn?: Date[] | string[]
     lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
@@ -7353,15 +7277,15 @@ export namespace Prisma {
 
   export type NestedEnumTokenTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[]
+    notIn?: $Enums.TokenType[]
     not?: NestedEnumTokenTypeFilter<$PrismaModel> | $Enums.TokenType
   }
 
   export type NestedEnumTokenTypeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.TokenType | EnumTokenTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.TokenType[] | ListEnumTokenTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.TokenType[]
+    notIn?: $Enums.TokenType[]
     not?: NestedEnumTokenTypeWithAggregatesFilter<$PrismaModel> | $Enums.TokenType
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTokenTypeFilter<$PrismaModel>
@@ -7392,14 +7316,13 @@ export namespace Prisma {
 
   export type TokenCreateManyUserInputEnvelope = {
     data: TokenCreateManyUserInput | TokenCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type SummaryCreateWithoutUserInput = {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -7412,7 +7335,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -7428,7 +7351,6 @@ export namespace Prisma {
 
   export type SummaryCreateManyUserInputEnvelope = {
     data: SummaryCreateManyUserInput | SummaryCreateManyUserInput[]
-    skipDuplicates?: boolean
   }
 
   export type TokenUpsertWithWhereUniqueWithoutUserInput = {
@@ -7483,7 +7405,7 @@ export namespace Prisma {
     id?: StringFilter<"Summary"> | string
     originalText?: StringFilter<"Summary"> | string
     summaryText?: StringFilter<"Summary"> | string
-    bulletPoints?: StringNullableListFilter<"Summary">
+    bulletPoints?: StringFilter<"Summary"> | string
     wordCount?: IntFilter<"Summary"> | number
     readingTime?: IntFilter<"Summary"> | number
     title?: StringNullableFilter<"Summary"> | string | null
@@ -7607,7 +7529,6 @@ export namespace Prisma {
 
   export type SlackMessageCreateManySummaryInputEnvelope = {
     data: SlackMessageCreateManySummaryInput | SlackMessageCreateManySummaryInput[]
-    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutSummariesInput = {
@@ -7677,7 +7598,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -7690,7 +7611,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -7719,7 +7640,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7732,7 +7653,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7754,7 +7675,7 @@ export namespace Prisma {
     id?: string
     originalText: string
     summaryText: string
-    bulletPoints?: SummaryCreatebulletPointsInput | string[]
+    bulletPoints: string
     wordCount: number
     readingTime: number
     title?: string | null
@@ -7792,7 +7713,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7805,7 +7726,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
@@ -7818,7 +7739,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     originalText?: StringFieldUpdateOperationsInput | string
     summaryText?: StringFieldUpdateOperationsInput | string
-    bulletPoints?: SummaryUpdatebulletPointsInput | string[]
+    bulletPoints?: StringFieldUpdateOperationsInput | string
     wordCount?: IntFieldUpdateOperationsInput | number
     readingTime?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
